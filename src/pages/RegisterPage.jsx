@@ -14,11 +14,16 @@ const RegisterPage = () => {
 	const [values, setValues] = useState(initialState)
 
 	const handleChange = e => {
-		console.log(e.target)
+		const name = e.target.name
+		const value = e.target.value
+		setValues({ ...values, [name]: value }) // dynamic keys values
 	}
 	const handleSubmit = e => {
 		e.preventDefault()
-		console.log(e.target)
+		const {name, email,password,isMember} = values
+		if (!email || !password || (!isMember && !name)) {
+			console.log('Please fill out all fields')
+		}
 	}
 	const toggleMember = () => {
 		setValues({ ...values, isMember: !values.isMember })
@@ -36,6 +41,7 @@ const RegisterPage = () => {
 						name='name'
 						value={values.name}
 						handleChange={handleChange}
+						onChange={handleChange}
 					/>
 				)}
 
@@ -45,6 +51,7 @@ const RegisterPage = () => {
 					name='email'
 					value={values.email}
 					handleChange={handleChange}
+					onChange={handleChange}
 				/>
 				{/* password field */}
 				<FormRow
@@ -52,6 +59,7 @@ const RegisterPage = () => {
 					name='password'
 					value={values.password}
 					handleChange={handleChange}
+					onChange={handleChange}
 				/>
 				<button type='submit' className='btn btn-block'>
 					submit
