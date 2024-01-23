@@ -12,7 +12,7 @@ const App = () => {
 				<Route path='/register' element={<RegisterPage />} />
 				<Route path='*' element={<ErrorPage />} />
 			</Routes>
-			<ToastContainer />
+			<ToastContainer position='top-center' autoClose={3000} />
 		</BrowserRouter>
 	)
 }
