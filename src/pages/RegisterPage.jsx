@@ -1,7 +1,7 @@
 import Wrapper from '../assets/wrappers/RegisterPage'
 import { useState, useEffect } from 'react'
 import { Logo, FormRow } from '../components'
-import { Button } from 'antd'
+import { toast } from 'react-toastify'
 
 const initialState = {
 	name: '',
@@ -22,7 +22,7 @@ const RegisterPage = () => {
 		e.preventDefault()
 		const {name, email,password,isMember} = values
 		if (!email || !password || (!isMember && !name)) {
-			console.log('Please fill out all fields')
+			toast.error('please fill out all fields')
 		}
 	}
 	const toggleMember = () => {
