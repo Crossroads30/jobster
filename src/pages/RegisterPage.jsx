@@ -2,6 +2,8 @@ import Wrapper from '../assets/wrappers/RegisterPage'
 import { useState, useEffect } from 'react'
 import { Logo, FormRow } from '../components'
 import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginUser, registerUser } from '../features/user/userSlice'
 
 const initialState = {
 	name: '',
@@ -12,6 +14,8 @@ const initialState = {
 
 const RegisterPage = () => {
 	const [values, setValues] = useState(initialState)
+	const { user, isLoading } = useSelector(store => store.user)
+	const dispatch = useDispatch()
 
 	const handleChange = e => {
 		const name = e.target.name
@@ -20,10 +24,16 @@ const RegisterPage = () => {
 	}
 	const handleSubmit = e => {
 		e.preventDefault()
-		const {name, email,password,isMember} = values
+		const { name, email, password, isMember } = values
 		if (!email || !password || (!isMember && !name)) {
 			toast.error('please fill out all fields')
+			return
 		}
+		if (isMember) {
+			dispatch(loginUser({ email: email, password: password })) // long way
+			return
+		}
+		dispatch(registerUser({ name, email, password })) // short ES6 way
 	}
 	const toggleMember = () => {
 		setValues({ ...values, isMember: !values.isMember })
