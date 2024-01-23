@@ -1,9 +1,12 @@
-import Landing from './pages/Landing'
+import { LandingPage, DashboardPage, ErrorPage, RegisterPage } from './pages'
 
 const App = () => {
 	return (
 		<div>
-			<Landing />
+			<LandingPage />
+      <ErrorPage />
+      <DashboardPage />
+      <RegisterPage />
 		</div>
 	)
 }
