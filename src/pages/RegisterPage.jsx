@@ -1,6 +1,6 @@
 import Wrapper from '../assets/wrappers/RegisterPage'
 import { useState, useEffect } from 'react'
-import { Logo } from '../components'
+import { Logo, FormRow } from '../components'
 import { Button } from 'antd'
 
 const initialState = {
@@ -20,26 +20,48 @@ const RegisterPage = () => {
 		e.preventDefault()
 		console.log(e.target)
 	}
+	const toggleMember = () => {
+		setValues({ ...values, isMember: !values.isMember })
+	}
 
 	return (
 		<Wrapper className='full-page'>
 			<form className='form' onSubmit={handleSubmit}>
 				<Logo />
-				<h3>login</h3>
+				<h3>{values.isMember ? 'login' : 'register'}</h3>
 				{/* name field */}
-				<div className='form-row'>
-					<label htmlFor='name' className='form-label'>
-						name
-					</label>
-					<input
+				{!values.isMember && (
+					<FormRow
 						type='text'
 						name='name'
 						value={values.name}
-						onChange={handleChange}
-						className='form-input'
+						handleChange={handleChange}
 					/>
-				</div>
-        <button type='submit' className='btn btn-block'>submit</button>
+				)}
+
+				{/* email field */}
+				<FormRow
+					type='email'
+					name='email'
+					value={values.email}
+					handleChange={handleChange}
+				/>
+				{/* password field */}
+				<FormRow
+					type='password'
+					name='password'
+					value={values.password}
+					handleChange={handleChange}
+				/>
+				<button type='submit' className='btn btn-block'>
+					submit
+				</button>
+				<p>
+					{values.isMember ? 'Not a member yet?' : 'Already a member?'}
+					<button type='button' onClick={toggleMember} className='member-btn'>
+						{values.isMember ? 'Register' : 'Login'}
+					</button>
+				</p>
 			</form>
 		</Wrapper>
 	)
