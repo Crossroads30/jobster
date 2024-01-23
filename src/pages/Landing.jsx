@@ -1,16 +1,21 @@
-import logo from '../assets/images/logo.svg'
 import main from '../assets/images/main.svg'
 import Wrapper from '../assets/wrappers/LandingPage'
 import { Button, Flex } from 'antd'
+import { Logo } from '../components'
 
 const Landing = () => {
 	return (
 		<Wrapper>
 			<nav>
-				<img src={logo} alt='logo' className='logo' />
+				<Logo />
 			</nav>
 			{/* <div className='container page'> */}
-			<Flex wrap='wrap' align='center' justify='space-between' className='container page'>
+			<Flex
+				wrap='wrap'
+				align='center'
+				justify='space-between'
+				className='container page'
+			>
 				<div className='info'>
 					<h1>
 						job <span>tracking</span> app
