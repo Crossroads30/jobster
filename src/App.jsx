@@ -1,6 +1,10 @@
+import Landing from './pages/Landing'
+
 const App = () => {
-  return (
-    <div>Jobster</div>
-  )
+	return (
+		<div>
+			<Landing />
+		</div>
+	)
 }
 export default App
