@@ -5,19 +5,21 @@ import { useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from 'antd'
+import { toggleSidebar } from '../features/user/userSlice'
 
 const Navbar = () => {
+	const [showLogout, setShowLogout] = useState(false)
 	const { user } = useSelector(store => store.user)
 	const dispatch = useDispatch()
+
+	const toggle = () => {
+		dispatch(toggleSidebar())
+	}
 
 	return (
 		<Wrapper>
 			<div className='nav-center'>
-				<button
-					type='button'
-					className='toggle-btn'
-					onClick={() => console.log('toggle sidebar')}
-				>
+				<button type='button' className='toggle-btn' onClick={toggle}>
 					<FaAlignLeft />
 				</button>
 				<div>
@@ -28,23 +30,25 @@ const Navbar = () => {
 					<button
 						type='button'
 						className='btn'
-						onClick={() => {
-							console.log('toggle logout dropdown')
-						}}
+						onClick={() => setShowLogout(!showLogout)}
 					>
 						<FaUserCircle />
 						{user?.name}
 						<FaCaretDown />
 					</button>
-					<div className='dropdown show-dropdown'>
-						<button
-							type='button'
-							className='dropdown-btn'
-							onClick={() => {
-								console.log('logout user')
-							}}
-						>logout</button>
-					</div>
+					{showLogout && (
+						<div className='dropdown show-dropdown'>
+							<button
+								type='button'
+								className='dropdown-btn'
+								onClick={() => {
+									console.log('logout user')
+								}}
+							>
+								logout
+							</button>
+						</div>
+					)}
 				</div>
 			</div>
 		</Wrapper>
