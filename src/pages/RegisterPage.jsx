@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser, registerUser } from '../features/user/userSlice'
 import { useNavigate } from 'react-router-dom'
+import { Button } from 'antd'
 
 const initialState = {
 	name: '',
@@ -82,9 +83,15 @@ const RegisterPage = () => {
 					handleChange={handleChange}
 					onChange={handleChange}
 				/>
-				<button type='submit' className='btn btn-block' disabled={isLoading}>
-					submit
-				</button>
+				{isLoading ? (
+					<Button type='primary' loading className='btn btn-block'>
+						Loading
+					</Button>
+				) : (
+					<button type='submit' className='btn btn-block' disabled={isLoading}>
+						submit
+					</button>
+				)}
 				<p>
 					{values.isMember ? 'Not a member yet?' : 'Already a member?'}
 					<button type='button' onClick={toggleMember} className='member-btn'>
