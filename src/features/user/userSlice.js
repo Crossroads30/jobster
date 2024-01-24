@@ -50,6 +50,7 @@ const userSlice = createSlice({
 			state.user = null
 			state.isSidebarOpen = false
 			removeUserFromLocalStorage()
+			toast.success(`logout successful!`)
 		}
 	},
 	extraReducers: builder => {
