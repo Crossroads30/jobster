@@ -16,8 +16,8 @@ const App = () => {
 			<Routes>
 				<Route path='/' element={<SharedLayout />}>
 					<Route index element={<Stats />} />
-					<Route path='/all-jabs' element={<AllJobs />} />
-					<Route path='/add-jab' element={<AddJob />} />
+					<Route path='/all-jobs' element={<AllJobs />} />
+					<Route path='/add-job' element={<AddJob />} />
 					<Route path='/profile' element={<Profile />} />
 				</Route>
 				<Route path='/landing' element={<LandingPage />} />
