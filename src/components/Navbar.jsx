@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from 'antd'
-import { toggleSidebar } from '../features/user/userSlice'
+import { logoutUser, toggleSidebar } from '../features/user/userSlice'
 
 const Navbar = () => {
 	const [showLogout, setShowLogout] = useState(false)
@@ -14,6 +14,10 @@ const Navbar = () => {
 
 	const toggle = () => {
 		dispatch(toggleSidebar())
+	}
+	const logout = () => {
+		dispatch(logoutUser())
+		setShowLogout(false)
 	}
 
 	return (
@@ -37,13 +41,7 @@ const Navbar = () => {
 						<FaCaretDown />
 					</button>
 					<div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
-						<button
-							type='button'
-							className='dropdown-btn'
-							onClick={() => {
-								console.log('logout user')
-							}}
-						>
+						<button type='button' className='dropdown-btn' onClick={logout}>
 							logout
 						</button>
 					</div>
