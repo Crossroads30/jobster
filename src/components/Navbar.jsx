@@ -36,19 +36,17 @@ const Navbar = () => {
 						{user?.name}
 						<FaCaretDown />
 					</button>
-					{showLogout && (
-						<div className='dropdown show-dropdown'>
-							<button
-								type='button'
-								className='dropdown-btn'
-								onClick={() => {
-									console.log('logout user')
-								}}
-							>
-								logout
-							</button>
-						</div>
-					)}
+					<div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
+						<button
+							type='button'
+							className='dropdown-btn'
+							onClick={() => {
+								console.log('logout user')
+							}}
+						>
+							logout
+						</button>
+					</div>
 				</div>
 			</div>
 		</Wrapper>
