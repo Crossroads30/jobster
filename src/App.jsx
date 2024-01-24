@@ -1,5 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { LandingPage, DashboardPage, ErrorPage, RegisterPage } from './pages'
+import { LandingPage, ErrorPage, RegisterPage } from './pages'
+import {
+	AddJob,
+	AllJobs,
+	Profile,
+	SharedLayout,
+	Stats,
+} from './pages/dashboard'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -7,7 +14,12 @@ const App = () => {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path='/' element={<DashboardPage />} />
+				<Route path='/' element={<SharedLayout />}>
+					<Route index element={<Stats />} />
+					<Route path='/all-jabs' element={<AllJobs />} />
+					<Route path='/add-jab' element={<AddJob />} />
+					<Route path='/profile' element={<Profile />} />
+				</Route>
 				<Route path='/landing' element={<LandingPage />} />
 				<Route path='/register' element={<RegisterPage />} />
 				<Route path='*' element={<ErrorPage />} />
