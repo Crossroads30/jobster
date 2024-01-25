@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
-import customFetch from '../../utils/axios'
 import {
 	addUserToLocalStorage,
 	removeUserFromLocalStorage,
 	getUserFromLocalStorage,
 } from '../../utils/localStorage'
+import { loginUserThunk, registerUserThunk, updateUserThunk } from './userThunk'
 
 const initialState = {
 	isLoading: false,
@@ -18,48 +18,21 @@ export const registerUser = createAsyncThunk(
 	async (user, thunkAPI) => {
 		// second: async function
 		// console.log(`Register User: ${JSON.stringify(user)}`)
-		try {
-			const response = await customFetch.post('/auth/register', user) // await!!!
-			// console.log(response)
-			return response.data
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data.msg)
-		}
+		return registerUserThunk('/auth/register', user, thunkAPI)
 	}
 )
 export const loginUser = createAsyncThunk(
 	'user/loginUser', // first param: name of slice/name of action
 	async (user, thunkAPI) => {
 		// second: async function
-		try {
-			const response = await customFetch.post('/auth/login', user) // await!!!
-			// console.log(response)
-			return response.data
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data.msg)
-		}
+return loginUserThunk('auth/login',user, thunkAPI)
 	}
 )
 export const updateUser = createAsyncThunk(
 	'user/updateUser', // first param: name of slice/name of action
 	async (user, thunkAPI) => {
 		// second: async function
-		try {
-			const response = await customFetch.patch('/auth/updateUser', user, {
-				headers: {
-					authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
-				},
-			}) // (await!!!) third: options
-			// console.log(response)
-			return response.data
-		} catch (error) {
-			if (error.response.status === 401) {
-				thunkAPI.dispatch(logoutUser())
-				return thunkAPI.rejectWithValue('Unauthorized! Logging out...')
-			}
-			// console.log(error.response)
-			return thunkAPI.rejectWithValue(error.response.data.msg)
-		}
+		return updateUserThunk('/auth/updateUser',user,thunkAPI)
 	}
 )
 
