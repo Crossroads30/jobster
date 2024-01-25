@@ -53,7 +53,11 @@ export const updateUser = createAsyncThunk(
 			// console.log(response)
 			return response.data
 		} catch (error) {
-			console.log(error.response)
+			if (error.response.status === 401) {
+				thunkAPI.dispatch(logoutUser())
+				return thunkAPI.rejectWithValue('Unauthorized! Logging out...')
+			}
+			// console.log(error.response)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
@@ -69,8 +73,8 @@ const userSlice = createSlice({
 		logoutUser: state => {
 			state.user = null
 			state.isSidebarOpen = false
-			removeUserFromLocalStorage()
 			toast.success(`logout successful!`)
+			removeUserFromLocalStorage()
 		},
 	},
 	extraReducers: builder => {
