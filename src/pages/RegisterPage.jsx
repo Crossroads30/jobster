@@ -44,10 +44,11 @@ const RegisterPage = () => {
 
 	useEffect(() => {
 		if (user) {
-			const timeout = setTimeout(() => {
-				navigate('/')
-			}, 3000)
-			return () => clearTimeout(timeout)
+			// const timeout = setTimeout(() => {
+			// 	navigate('/')
+			// }, 1000)
+			// return () => clearTimeout(timeout)
+			navigate('/')
 		}
 	}, [user])
 
