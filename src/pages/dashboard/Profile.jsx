@@ -4,6 +4,7 @@ import { FormRow } from '../../components'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { Button } from 'antd'
+import { updateUser } from '../../features/user/userSlice'
 
 const Profile = () => {
 	const { isLoading, user } = useSelector(store => store.user)
@@ -23,6 +24,7 @@ const Profile = () => {
 			toast.error('please fill out all fields')
 			return
 		}
+    dispatch(updateUser(userData))
 	}
 	const handleChange = e => {
 		const name = e.target.name
