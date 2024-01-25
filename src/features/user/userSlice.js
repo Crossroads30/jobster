@@ -11,6 +11,7 @@ const initialState = {
 	isLoading: false,
 	isSidebarOpen: false,
 	user: getUserFromLocalStorage(),
+	isAuthError: false,
 }
 
 export const registerUser = createAsyncThunk(
@@ -25,14 +26,14 @@ export const loginUser = createAsyncThunk(
 	'user/loginUser', // first param: name of slice/name of action
 	async (user, thunkAPI) => {
 		// second: async function
-return loginUserThunk('auth/login',user, thunkAPI)
+		return loginUserThunk('auth/login', user, thunkAPI)
 	}
 )
 export const updateUser = createAsyncThunk(
 	'user/updateUser', // first param: name of slice/name of action
 	async (user, thunkAPI) => {
 		// second: async function
-		return updateUserThunk('/auth/updateUser',user,thunkAPI)
+		return updateUserThunk('/auth/updateUser', user, thunkAPI)
 	}
 )
 
@@ -46,8 +47,14 @@ const userSlice = createSlice({
 		logoutUser: state => {
 			state.user = null
 			state.isSidebarOpen = false
-			toast.success(`logout successful!`)
 			removeUserFromLocalStorage()
+			if (!state.isAuthError) {
+				toast.success(`logout successful!`)
+			}
+			state.isAuthError = false
+		},
+		setAuthError: state => {
+			state.isAuthError = true
 		},
 	},
 	extraReducers: builder => {
@@ -100,5 +107,5 @@ const userSlice = createSlice({
 	},
 })
 
-export const { toggleSidebar, logoutUser } = userSlice.actions
+export const { toggleSidebar, logoutUser, setAuthError } = userSlice.actions
 export default userSlice.reducer
