@@ -14,8 +14,9 @@ const initialState = {
 }
 
 export const registerUser = createAsyncThunk(
-	'user/registerUser', // first: name of slice/ second: name of action
+	'user/registerUser', // first param: name of slice/name of action
 	async (user, thunkAPI) => {
+		// second: async function
 		// console.log(`Register User: ${JSON.stringify(user)}`)
 		try {
 			const response = await customFetch.post('/auth/register', user) // await!!!
@@ -27,13 +28,32 @@ export const registerUser = createAsyncThunk(
 	}
 )
 export const loginUser = createAsyncThunk(
-	'user/loginUser', // first: name of slice/ second: name of action
+	'user/loginUser', // first param: name of slice/name of action
 	async (user, thunkAPI) => {
+		// second: async function
 		try {
 			const response = await customFetch.post('/auth/login', user) // await!!!
 			// console.log(response)
 			return response.data
 		} catch (error) {
+			return thunkAPI.rejectWithValue(error.response.data.msg)
+		}
+	}
+)
+export const updateUser = createAsyncThunk(
+	'user/updateUser', // first param: name of slice/name of action
+	async (user, thunkAPI) => {
+		// second: async function
+		try {
+			const response = await customFetch.patch('/auth/updateUser', user, {
+				headers: {
+					authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
+				},
+			}) // (await!!!) third: options
+			// console.log(response)
+			return response.data
+		} catch (error) {
+			console.log(error.response)
 			return thunkAPI.rejectWithValue(error.response.data.msg)
 		}
 	}
@@ -51,11 +71,11 @@ const userSlice = createSlice({
 			state.isSidebarOpen = false
 			removeUserFromLocalStorage()
 			toast.success(`logout successful!`)
-		}
+		},
 	},
 	extraReducers: builder => {
 		builder
-			// registerUser
+			// registerUser-----------
 			.addCase(registerUser.pending, state => {
 				state.isLoading = true
 			})
@@ -70,7 +90,7 @@ const userSlice = createSlice({
 				state.isLoading = false
 				toast.error(payload)
 			})
-			// loginUser
+			// loginUser-------------
 			.addCase(loginUser.pending, state => {
 				state.isLoading = true
 			})
@@ -82,6 +102,21 @@ const userSlice = createSlice({
 				toast.success(`welcome back, ${user.name}`)
 			})
 			.addCase(loginUser.rejected, (state, { payload }) => {
+				state.isLoading = false
+				toast.error(payload)
+			})
+			// updateUser--------------
+			.addCase(updateUser.pending, state => {
+				state.isLoading = true
+			})
+			.addCase(updateUser.fulfilled, (state, { payload }) => {
+				const { user } = payload
+				state.isLoading = false
+				state.user = user
+				addUserToLocalStorage(user)
+				toast.success(`user updated!`)
+			})
+			.addCase(updateUser.rejected, (state, { payload }) => {
 				state.isLoading = false
 				toast.error(payload)
 			})
