@@ -24,7 +24,7 @@ const jobSlice = createSlice({
 			state[name] = value
 		},
 		clearJobForm: () => {
-			console.log('clear forms')
+			return initialState
 		},
 	},
 	extraReducers: builder => {},
