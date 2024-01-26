@@ -1,71 +1,93 @@
+import { useSelector } from 'react-redux'
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
 import { FormRow } from '../../components'
+import { toast } from 'react-toastify'
+import FormSelectRow from '../../components/FormSelectRow'
 
 const AddJob = () => {
-	// const [jobData, setJobData] = useState({
-	// 	position: positioon || '',
-	// 	company: company || '',
-	// 	jobLocation: jobLocation || '',
-	// 	status: status || '',
-	// 	jobType: jobType || '',
-	// })
+	const {
+		isLoading,
+		isEditing,
+		position,
+		company,
+		jobLocation,
+		jobType,
+		jobTypeOptions,
+		status,
+		statusOptions,
+		editJobId,
+	} = useSelector(store => store.job)
 
 	const handleSubmit = e => {
 		e.preventDefault()
+		if (!position || !company || !jobLocation) {
+			toast.error('please fill out all fields')
+		}
 		console.log('submit')
 	}
-	const handleChange = e => {
+	const handleJobInput = e => {
 		const name = e.target.name
 		const value = e.target.value
-		console.log('change')
+		console.log(name)
 	}
 
 	return (
 		<Wrapper>
 			<form onSubmit={handleSubmit} className='form'>
-				<h3>add job</h3>
+				<h3>{isEditing ? 'edit job' : 'add job'}</h3>
 				<div className='form-center'>
+					{/* Position */}
 					<FormRow
 						type='text'
 						name='position'
-						value={''}
-						handleChange={handleChange}
+						value={position}
+						handleChange={handleJobInput}
 					/>
+					{/* Company */}
 					<FormRow
 						type='text'
 						name='company'
-						value={''}
-						handleChange={handleChange}
+						value={company}
+						handleChange={handleJobInput}
 					/>
+					{/* Job location */}
 					<FormRow
 						type='text'
 						name='jobLocation'
 						labeltext='job location'
-						value={''}
-						handleChange={handleChange}
+						value={jobLocation}
+						handleChange={handleJobInput}
 					/>
-					<FormRow
-						type='text'
+					{/* Status */}
+					<FormSelectRow
 						name='status'
-						value={''}
-						handleChange={handleChange}
+						value={status}
+						list={statusOptions}
+						handleChange={handleJobInput}
 					/>
-					<FormRow
-						type='text'
+					{/* Job type */}
+					<FormSelectRow
 						name='jobType'
-						labeltext='job type'
-						value={''}
-						handleChange={handleChange}
+						labeltext='job Type'
+						value={jobType}
+						list={jobTypeOptions}
+						handleChange={handleJobInput}
 					/>
+					{/* Button container */}
 					<div className='btn-container'>
 						<button
 							type='button'
-							className='btn clear-btn'
+							className='btn btn-block clear-btn'
 							onClick={() => console.log('clear')}
 						>
 							clear
 						</button>
-						<button type='submit' className='btn btn-block'>
+						<button
+							type='submit'
+							className='btn btn-block submit-btn'
+							onClick={handleSubmit}
+							disabled={isLoading}
+						>
 							submit
 						</button>
 					</div>
