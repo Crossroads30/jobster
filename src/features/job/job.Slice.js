@@ -1,4 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
+import customFetch from '../../utils/axios'
+import { getUserFromLocalStorage } from '../../utils/localStorage' 
 
 const initialState = {
 	isLoading: false,
@@ -21,7 +24,7 @@ const jobSlice = createSlice({
 			console.log('clear forms')
 		},
 	},
-	extraReducers: {},
+	extraReducers: builder => {},
 })
 
 export const { clearJobForm } = jobSlice.actions
