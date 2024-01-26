@@ -3,7 +3,7 @@ import Wrapper from '../../assets/wrappers/DashboardFormPage'
 import { FormRow } from '../../components'
 import { toast } from 'react-toastify'
 import FormSelectRow from '../../components/FormSelectRow'
-import { handleChange } from '../../features/job/job.Slice'
+import { handleChange, clearJobForm } from '../../features/job/job.Slice'
 
 const AddJob = () => {
 	const {
@@ -18,7 +18,7 @@ const AddJob = () => {
 		statusOptions,
 		editJobId,
 	} = useSelector(store => store.job)
-  const dispatch = useDispatch()
+	const dispatch = useDispatch()
 
 	const handleSubmit = e => {
 		e.preventDefault()
@@ -30,7 +30,7 @@ const AddJob = () => {
 	const handleJobInput = e => {
 		const name = e.target.name
 		const value = e.target.value
-		dispatch(handleChange({name, value})) // we pass the object!
+		dispatch(handleChange({ name, value })) // we pass the object!
 	}
 
 	return (
@@ -80,7 +80,7 @@ const AddJob = () => {
 						<button
 							type='button'
 							className='btn btn-block clear-btn'
-							onClick={() => console.log('clear')}
+							onClick={() => dispatch(clearJobForm())}
 						>
 							clear
 						</button>
