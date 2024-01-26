@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
 import customFetch from '../../utils/axios'
-import { getUserFromLocalStorage } from '../../utils/localStorage' 
+import { getUserFromLocalStorage } from '../../utils/localStorage'
 
 const initialState = {
 	isLoading: false,
@@ -18,8 +18,11 @@ const initialState = {
 
 const jobSlice = createSlice({
 	name: 'job',
-	initialState,
+	initialState, 
 	reducers: {
+		handleChange: (state, { payload: { name, value } }) => {
+			state[name] = value
+		},
 		clearJobForm: () => {
 			console.log('clear forms')
 		},
@@ -27,5 +30,5 @@ const jobSlice = createSlice({
 	extraReducers: builder => {},
 })
 
-export const { clearJobForm } = jobSlice.actions
+export const { handleChange, clearJobForm } = jobSlice.actions
 export default jobSlice.reducer

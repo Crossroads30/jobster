@@ -1,8 +1,9 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
 import { FormRow } from '../../components'
 import { toast } from 'react-toastify'
 import FormSelectRow from '../../components/FormSelectRow'
+import { handleChange } from '../../features/job/job.Slice'
 
 const AddJob = () => {
 	const {
@@ -17,6 +18,7 @@ const AddJob = () => {
 		statusOptions,
 		editJobId,
 	} = useSelector(store => store.job)
+  const dispatch = useDispatch()
 
 	const handleSubmit = e => {
 		e.preventDefault()
@@ -28,7 +30,7 @@ const AddJob = () => {
 	const handleJobInput = e => {
 		const name = e.target.name
 		const value = e.target.value
-		console.log(name)
+		dispatch(handleChange({name, value})) // we pass the object!
 	}
 
 	return (
