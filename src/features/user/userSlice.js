@@ -11,7 +11,7 @@ const initialState = {
 	isLoading: false,
 	isSidebarOpen: false,
 	user: getUserFromLocalStorage(),
-	isAuthError: false,
+	// isAuthError: false,
 }
 
 export const registerUser = createAsyncThunk(
@@ -44,18 +44,18 @@ const userSlice = createSlice({
 		toggleSidebar: state => {
 			state.isSidebarOpen = !state.isSidebarOpen
 		},
-		logoutUser: state => {
+		logoutUser: (state, {payload}) => {
 			state.user = null
 			state.isSidebarOpen = false
 			removeUserFromLocalStorage()
-			if (!state.isAuthError) {
-				toast.success(`logout successful!`)
+			if (payload) {
+				toast.success(payload)
 			}
 			state.isAuthError = false
 		},
-		setAuthError: state => {
-			state.isAuthError = true
-		},
+		// setAuthError: state => {
+		// 	state.isAuthError = true
+		// },
 	},
 	extraReducers: builder => {
 		builder
