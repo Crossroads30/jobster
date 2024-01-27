@@ -32,7 +32,11 @@ const jobSlice = createSlice({
 			state[name] = value
 		},
 		clearJobForm: () => {
-			return initialState
+			return {
+				...initialState,
+				// we get location from local storage
+				jobLocation: getUserFromLocalStorage()?.location || '',
+			} 
 		},
 	},
 	extraReducers: builder => {
