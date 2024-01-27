@@ -8,6 +8,7 @@ import {
 	clearJobForm,
 	createJob,
 } from '../../features/job/job.Slice'
+import { useEffect } from 'react'
 
 const AddJob = () => {
 	const {
@@ -22,7 +23,12 @@ const AddJob = () => {
 		statusOptions,
 		editJobId,
 	} = useSelector(store => store.job)
+	const { user } = useSelector(store => store.user)
 	const dispatch = useDispatch()
+
+	useEffect(() => {
+		dispatch(handleChange({ name: 'jobLocation', value: user.location }))
+	}, [])
 
 	const handleSubmit = e => {
 		e.preventDefault()
