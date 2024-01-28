@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { getAllJobsThunk } from './allJobsThunk'
+import { toast } from 'react-toastify'
 
 const initialFilterState = {
 	search: '',
@@ -18,9 +20,32 @@ const initialState = {
 	...initialFilterState,
 }
 
+export const getAllJobs = createAsyncThunk(
+	'allJobs/getAllJobs',
+	async (_, thunkAPI) => {
+		let url = `/jobs`
+		return getAllJobsThunk(url, _, thunkAPI)
+	}
+)
+
 const allJobsSlice = createSlice({
 	name: 'allJobs',
 	initialState,
+	extraReducers: builder => {
+		builder
+			// create job-----------
+			.addCase(getAllJobs.pending, state => {
+				state.isLoading = true
+			})
+			.addCase(getAllJobs.fulfilled, (state, {payload}) => {
+				state.isLoading = false
+				state.jobs = payload.jobs
+			})
+			.addCase(getAllJobs.rejected, (state, { payload }) => {
+				state.isLoading = false
+				toast.error(payload)
+			})
+	},
 })
 
 export default allJobsSlice.reducer
