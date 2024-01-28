@@ -23,11 +23,7 @@ export const loginUserThunk = async (url, user, thunkAPI) => {
 
 export const updateUserThunk = async (url, user, thunkAPI) => {
 	try {
-		const response = await customFetch.patch(url, user, {
-			headers: {
-				authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
-			},
-		}) // (await!!!) third: options
+		const response = await customFetch.patch(url, user) // (await!!!) third: options is the headers, but we set it in axios interceptors
 		// console.log(response)
 		return response.data
 	} catch (error) {
