@@ -27,7 +27,8 @@ const AddJob = () => {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		dispatch(handleChange({ name: 'jobLocation', value: user.location }))
+		if (!isEditing)
+			dispatch(handleChange({ name: 'jobLocation', value: user.location }))
 	}, [])
 
 	const handleSubmit = e => {
@@ -36,7 +37,6 @@ const AddJob = () => {
 			toast.error('please fill out all fields')
 		}
 		dispatch(createJob({ position, company, jobLocation, jobType, status }))
-		console.log('submit')
 	}
 	const handleJobInput = e => {
 		const name = e.target.name
