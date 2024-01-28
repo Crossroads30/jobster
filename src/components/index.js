@@ -3,6 +3,15 @@ import FormRow from '../components/FormRow'
 import BigSidebar from './BigSidebar'
 import SmallSideBar from './SmallSideBar'
 import Navbar from './Navbar'
+import JobsContainer from './JobsContainer'
+import SearchContainer from './SearchContainer'
 
-
-export { Logo, FormRow, BigSidebar, SmallSideBar, Navbar }
+export {
+	Logo,
+	FormRow,
+	BigSidebar,
+	SmallSideBar,
+	Navbar,
+	JobsContainer,
+	SearchContainer,
+}
