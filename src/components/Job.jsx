@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from 'react-icons/fa'
 import JobInfo from './jobInfo'
 import moment from 'moment'
-import { deleteJob } from '../features/job/job.Slice'
+import { deleteJob,setEditLob } from '../features/job/job.Slice'
 
 const Job = ({
 	_id,
@@ -40,7 +40,18 @@ const Job = ({
 						<Link
 							to='/add-job'
 							className='btn edit-btn'
-							onClick={() => console.log('edit')}
+							onClick={() =>
+								dispatch(
+									setEditLob({
+										editJobId: _id,
+										position,
+										company,
+										jobLocation,
+										jobType,
+										status,
+									})
+								)
+							}
 						>
 							Edit
 						</Link>
