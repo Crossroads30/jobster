@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from 'react-icons/fa'
 import JobInfo from './jobInfo'
 import moment from 'moment'
+import { deleteJob } from '../features/job/job.Slice'
 
 const Job = ({
 	_id,
@@ -46,7 +47,7 @@ const Job = ({
 						<button
 							type='button'
 							className='btn delete-btn'
-							onClick={() => console.log('delete')}
+							onClick={() => dispatch(deleteJob(_id))}
 						>
 							delete
 						</button>
