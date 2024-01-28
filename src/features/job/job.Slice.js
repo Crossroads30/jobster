@@ -45,6 +45,13 @@ const jobSlice = createSlice({
 				jobLocation: getUserFromLocalStorage()?.location || '',
 			}
 		},
+		setEditLob: (state, { payload }) => {
+			return {
+				...state,
+				isEditing: true,
+				...payload,
+			}
+		},
 	},
 	extraReducers: builder => {
 		builder
@@ -70,5 +77,5 @@ const jobSlice = createSlice({
 	},
 })
 
-export const { handleChange, clearJobForm } = jobSlice.actions
+export const { handleChange, clearJobForm, setEditLob } = jobSlice.actions
 export default jobSlice.reducer
