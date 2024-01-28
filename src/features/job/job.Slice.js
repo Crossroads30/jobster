@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
-import customFetch from '../../utils/axios'
 import { getUserFromLocalStorage } from '../../utils/localStorage'
-import { createJobThunk } from './jobThunk'
+import { createJobThunk, deleteJobThunk } from './jobThunk'
+import { showLoading, hideLoading, getAllJobs } from '../allJobs/allJobsSlice'
 
 const initialState = {
 	isLoading: false,
@@ -24,6 +24,13 @@ export const createJob = createAsyncThunk(
 	}
 )
 
+export const deleteJob = createAsyncThunk(
+	'job/deleteJob',
+	async (jobId, thunkAPI) => {
+		return deleteJobThunk(`/jobs/${jobId}`, thunkAPI)
+	}
+)
+
 const jobSlice = createSlice({
 	name: 'job',
 	initialState,
@@ -36,7 +43,7 @@ const jobSlice = createSlice({
 				...initialState,
 				// we get location from local storage
 				jobLocation: getUserFromLocalStorage()?.location || '',
-			} 
+			}
 		},
 	},
 	extraReducers: builder => {
@@ -51,6 +58,13 @@ const jobSlice = createSlice({
 			})
 			.addCase(createJob.rejected, (state, { payload }) => {
 				state.isLoading = false
+				toast.error(payload)
+			})
+			// delete job-----------
+			.addCase(deleteJob.fulfilled, (state, { payload }) => {
+				toast.success(payload)
+			})
+			.addCase(deleteJob.rejected, (state, { payload }) => {
 				toast.error(payload)
 			})
 	},
