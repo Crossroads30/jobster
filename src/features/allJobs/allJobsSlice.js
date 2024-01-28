@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getAllJobsThunk } from './allJobsThunk'
+import { getAllJobsThunk, showStatsThunk } from './allJobsThunk'
 import { toast } from 'react-toastify'
+import customFetch from '../../utils/axios'
 
 const initialFilterState = {
 	search: '',
@@ -20,13 +21,9 @@ const initialState = {
 	...initialFilterState,
 }
 
-export const getAllJobs = createAsyncThunk(
-	'allJobs/getAllJobs',
-	async (_, thunkAPI) => {
-		let url = `/jobs`
-		return getAllJobsThunk(url, _, thunkAPI)
-	}
-)
+export const getAllJobs = createAsyncThunk('allJobs/getAllJobs',getAllJobsThunk)
+
+export const showStats = createAsyncThunk('allJobs/showStats', showStatsThunk)
 
 const allJobsSlice = createSlice({
 	name: 'allJobs',
@@ -50,6 +47,19 @@ const allJobsSlice = createSlice({
 				state.jobs = payload.jobs
 			})
 			.addCase(getAllJobs.rejected, (state, { payload }) => {
+				state.isLoading = false
+				toast.error(payload)
+			})
+			// show stats------------
+			.addCase(showStats.pending, state => {
+				state.isLoading = true
+			})
+			.addCase(showStats.fulfilled, (state, { payload }) => {
+				state.isLoading = false
+				state.stats = payload.defaultStats
+				state.monthlyApplications = payload.monthlyApplications
+			})
+			.addCase(showStats.rejected, (state, { payload }) => {
 				state.isLoading = false
 				toast.error(payload)
 			})
