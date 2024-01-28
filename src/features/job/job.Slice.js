@@ -16,26 +16,11 @@ const initialState = {
 	editJobId: '',
 }
 
-export const createJob = createAsyncThunk(
-	'job/createJob',
-	async (job, thunkAPI) => {
-		return createJobThunk('/jobs', job, thunkAPI)
-	}
-)
+export const createJob = createAsyncThunk('job/createJob', createJobThunk)
 
-export const deleteJob = createAsyncThunk(
-	'job/deleteJob',
-	async (jobId, thunkAPI) => {
-		return deleteJobThunk(`/jobs/${jobId}`, thunkAPI)
-	}
-)
+export const deleteJob = createAsyncThunk('job/deleteJob', deleteJobThunk)
 
-export const editJob = createAsyncThunk(
-	'job/editJob',
-	async ({jobId, job}, thunkAPI) => {
-		return editJobThunk(`/jobs/${jobId}`, job, thunkAPI)
-	}
-)
+export const editJob = createAsyncThunk('job/editJob', editJobThunk)
 
 const jobSlice = createSlice({
 	name: 'job',
