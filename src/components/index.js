@@ -5,6 +5,8 @@ import SmallSideBar from './SmallSideBar'
 import Navbar from './Navbar'
 import JobsContainer from './JobsContainer'
 import SearchContainer from './SearchContainer'
+import StatsContainer from './StatsContainer'
+import ChartsContainer from './ChartsContainer'
 
 export {
 	Logo,
@@ -14,4 +16,6 @@ export {
 	Navbar,
 	JobsContainer,
 	SearchContainer,
+	StatsContainer,
+	ChartsContainer,
 }
