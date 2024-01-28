@@ -1,5 +1,5 @@
 import customFetch from '../../utils/axios'
-import { logoutUser, setAuthError } from './userSlice'
+import { logoutUser } from './userSlice'
 
 export const registerUserThunk = async (url, user, thunkAPI) => {
 	try {
@@ -17,7 +17,9 @@ export const loginUserThunk = async (url, user, thunkAPI) => {
 		// console.log(response)
 		return response.data
 	} catch (error) {
+		// console.log(error)
 		return thunkAPI.rejectWithValue(error.response.data.msg)
+
 	}
 }
 
