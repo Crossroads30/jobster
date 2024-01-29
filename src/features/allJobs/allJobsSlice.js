@@ -36,7 +36,7 @@ const allJobsSlice = createSlice({
 			state.isLoading = false
 		},
 		handelChange: (state, { payload: { name, value } }) => {
-			state.page = 1 // every time we change query param of all jobs page, we set page to 1 
+			state.page = 1 // every time we change query param of all jobs page, we set page to 1
 			state[name] = value
 		},
 		clearValues: state => {
@@ -48,6 +48,8 @@ const allJobsSlice = createSlice({
 		changePage: (state, { payload }) => {
 			state.page = payload
 		},
+		// we clear all & back to default initialState
+		clearAllJobsState: () => initialState,
 	},
 	extraReducers: builder => {
 		builder
@@ -81,6 +83,12 @@ const allJobsSlice = createSlice({
 	},
 })
 
-export const { showLoading, hideLoading, handelChange, clearValues, changePage } =
-	allJobsSlice.actions
+export const {
+	showLoading,
+	hideLoading,
+	handelChange,
+	clearValues,
+	changePage,
+	clearAllJobsState,
+} = allJobsSlice.actions
 export default allJobsSlice.reducer
