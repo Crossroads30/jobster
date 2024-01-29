@@ -8,7 +8,7 @@ const initialFilterState = {
 	searchStatus: 'all',
 	searchType: 'all',
 	sort: 'latest',
-	sortOption: ['latest', 'oldest', 'a-z', 'z-a'],
+	sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
 }
 const initialState = {
 	isLoading: false,
