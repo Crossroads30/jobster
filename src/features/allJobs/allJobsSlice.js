@@ -35,7 +35,7 @@ const allJobsSlice = createSlice({
 		hideLoading: state => {
 			state.isLoading = false
 		},
-		handelChange: (state, {payload: {name,value}})=> {
+		handelChange: (state, { payload: { name, value } }) => {
 			// state.page = 1 later
 			state[name] = value
 		},
@@ -44,7 +44,10 @@ const allJobsSlice = createSlice({
 				...state,
 				...initialFilterState,
 			}
-		}
+		},
+		changePage: (state, { payload }) => {
+			state.page = payload
+		},
 	},
 	extraReducers: builder => {
 		builder
@@ -78,6 +81,6 @@ const allJobsSlice = createSlice({
 	},
 })
 
-export const { showLoading, hideLoading, handelChange, clearValues } =
+export const { showLoading, hideLoading, handelChange, clearValues, changePage } =
 	allJobsSlice.actions
 export default allJobsSlice.reducer
