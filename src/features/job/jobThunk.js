@@ -1,7 +1,6 @@
 import { authHeader } from '../../utils/authHeader'
-import customFetch from '../../utils/axios'
+import customFetch, { checkForUnauthorizedResponse } from '../../utils/axios'
 import { getAllJobs, hideLoading, showLoading } from '../allJobs/allJobsSlice'
-import { logoutUser } from '../user/userSlice'
 import { clearJobForm } from './job.Slice'
 
 // Way1 - we can pass headers as separate function from this file:
@@ -24,10 +23,7 @@ export const createJobThunk = async (job, thunkAPI) => {
 		thunkAPI.dispatch(clearJobForm())
 		return response.data
 	} catch (error) {
-		if (error.response.status === 401) {
-			thunkAPI.dispatch(logoutUser())
-			return thunkAPI.rejectWithValue('Unauthorized! Logging out...')
-		}
+		return checkForUnauthorizedResponse(error, thunkAPI)
 	}
 }
 
@@ -39,7 +35,7 @@ export const deleteJobThunk = async (jobId, thunkAPI) => {
 		return response.data.msg // this data will be passed as payload to toast for success msg
 	} catch (error) {
 		thunkAPI.dispatch(hideLoading()) // if an error we hide loading from allJobsSlice
-		return thunkAPI.rejectWithValue(error.response.data.msg)
+		return checkForUnauthorizedResponse(error, thunkAPI)
 	}
 }
 
@@ -49,7 +45,7 @@ export const editJobThunk = async ({ jobId, job }, thunkAPI) => {
 		thunkAPI.dispatch(clearJobForm())
 		return response.data
 	} catch (error) {
-		return thunkAPI.rejectWithValue(error.response.data.msg)
+		return checkForUnauthorizedResponse(error, thunkAPI)
 	}
 }
 
