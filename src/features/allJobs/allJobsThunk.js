@@ -1,7 +1,12 @@
 import customFetch from '../../utils/axios'
 
 export const getAllJobsThunk = async (_, thunkAPI) => {
-	let url = `/jobs`
+	const { page, search, searchStatus, searchType, sort } =
+		thunkAPI.getState().allJobs
+	let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`
+	if (search) {
+		url = url + `&search=${search}`
+	}
 	try {
 		const response = await customFetch.get(url)
 		// console.log(response.data)
