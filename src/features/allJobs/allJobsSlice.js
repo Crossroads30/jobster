@@ -36,7 +36,7 @@ const allJobsSlice = createSlice({
 			state.isLoading = false
 		},
 		handelChange: (state, { payload: { name, value } }) => {
-			// state.page = 1 later
+			state.page = 1 // every time we change query param of all jobs page, we set page to 1 
 			state[name] = value
 		},
 		clearValues: state => {
