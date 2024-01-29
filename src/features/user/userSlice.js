@@ -14,28 +14,13 @@ const initialState = {
 	// isAuthError: false,
 }
 
-export const registerUser = createAsyncThunk(
-	'user/registerUser', // first param: name of slice/name of action
-	async (user, thunkAPI) => {
-		// second: async function
-		// console.log(`Register User: ${JSON.stringify(user)}`)
-		return registerUserThunk('/auth/register', user, thunkAPI)
-	}
-)
-export const loginUser = createAsyncThunk(
-	'user/loginUser', // first param: name of slice/name of action
-	async (user, thunkAPI) => {
-		// second: async function
-		return loginUserThunk('auth/login', user, thunkAPI)
-	}
-)
-export const updateUser = createAsyncThunk(
-	'user/updateUser', // first param: name of slice/name of action
-	async (user, thunkAPI) => {
-		// second: async function
-		return updateUserThunk('/auth/updateUser', user, thunkAPI)
-	}
-)
+// first param: name of slice/name of action
+// second: async function
+export const registerUser = createAsyncThunk('user/registerUser',registerUserThunk )
+
+export const loginUser = createAsyncThunk('user/loginUser', loginUserThunk)
+
+export const updateUser = createAsyncThunk('user/updateUser', updateUserThunk)
 
 const userSlice = createSlice({
 	name: 'user',

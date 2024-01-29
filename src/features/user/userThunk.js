@@ -1,9 +1,9 @@
 import customFetch from '../../utils/axios'
 import { logoutUser } from './userSlice'
 
-export const registerUserThunk = async (url, user, thunkAPI) => {
+export const registerUserThunk = async (user, thunkAPI) => {
 	try {
-		const response = await customFetch.post(url, user) // await!!!
+		const response = await customFetch.post('/auth/register', user) // await!!!
 		// console.log(response)
 		return response.data
 	} catch (error) {
@@ -11,9 +11,9 @@ export const registerUserThunk = async (url, user, thunkAPI) => {
 	}
 }
 
-export const loginUserThunk = async (url, user, thunkAPI) => {
+export const loginUserThunk = async (user, thunkAPI) => {
 	try {
-		const response = await customFetch.post(url, user) // await!!!
+		const response = await customFetch.post('auth/login', user) // await!!!
 		// console.log(response)
 		return response.data
 	} catch (error) {
@@ -23,9 +23,9 @@ export const loginUserThunk = async (url, user, thunkAPI) => {
 	}
 }
 
-export const updateUserThunk = async (url, user, thunkAPI) => {
+export const updateUserThunk = async (user, thunkAPI) => {
 	try {
-		const response = await customFetch.patch(url, user) // (await!!!) third: options is the headers, but we set it in axios interceptors
+		const response = await customFetch.patch('/auth/updateUser', user) // (await!!!) third: options is the headers, but we set it in axios interceptors
 		// console.log(response)
 		return response.data
 	} catch (error) {
